@@ -4,7 +4,9 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -45,6 +47,10 @@ public class Drivetrain extends SubsystemBase {
 
   // Also show a field diagram
   private final Field2d m_field2d = new Field2d();
+
+  // Creating some sensor for ROMI
+  private final AnalogInput m_romiEyes = new AnalogInput(1);
+  private final DigitalInput m_romiHand = new DigitalInput(1);
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -221,5 +227,21 @@ public class Drivetrain extends SubsystemBase {
    */
   public double getTurnRate() {
     return -m_gyro.getRate();
+  }
+
+  /**
+   * 
+   * @return Value of analog sensor
+   */
+  public double look() {
+    return m_romiEyes.getAverageVoltage();
+  }
+
+  /**
+   * 
+   * @return Whether sensor is triggered or not
+   */
+  public boolean touch() {
+    return m_romiHand.get();
   }
 }
